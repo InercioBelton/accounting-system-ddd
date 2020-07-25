@@ -1,5 +1,7 @@
 package com.inercio.infraestructure.persistence.jpa;
 
+import com.inercio.domain.model.account.Account;
+import com.inercio.domain.model.accountingEntry.AccountSide;
 import com.inercio.domain.model.accountingEntry.AccountingEntry;
 import com.inercio.domain.model.accountingEntry.AccountingEntryRepository;
 

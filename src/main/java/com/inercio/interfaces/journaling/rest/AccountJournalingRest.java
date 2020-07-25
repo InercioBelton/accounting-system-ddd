@@ -95,12 +95,12 @@ public class AccountJournalingRest {
     }
 
     @GET
-    @Path("accountingJournal/entry/{id}")
-    public Response getEntryDetails(@PathParam("id") long id) {
+    @Path("accountingJournal/entry/{entryId}")
+    public Response getEntryDetails(@PathParam("entryId") long entryId) {
         try {
-            return Response.ok(accountJournalingService.getEntryDetails(id)).build();
+            return Response.ok(accountJournalingService.getEntryDetails(entryId)).build();
         } catch (Exception e) {
-            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving details for entry with id " + id)).build();
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving details for entry with id " + entryId)).build();
         }
     }
 
@@ -145,6 +145,26 @@ public class AccountJournalingRest {
     }
 
     @GET
+    @Path("accounts/asset")
+    public Response listAssetAccounts() {
+        try {
+            return Response.ok(accountJournalingService.listAssetAccounts()).build();
+        } catch (Exception e) {
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving asset accounts")).build();
+        }
+    }
+
+    @GET
+    @Path("accounts/liability")
+    public Response listLiabilityAccounts() {
+        try {
+            return Response.ok(accountJournalingService.listLiabilityAccounts()).build();
+        } catch (Exception e) {
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving liability accounts")).build();
+        }
+    }
+
+    @GET
     @Path("account/{accountNumber}/entries")
     public Response listPostsMadeToAccount(@PathParam("accountNumber") BigDecimal accountNumber) {
         try {
@@ -159,9 +179,39 @@ public class AccountJournalingRest {
     public Response getAccoutCurrentBalance(@PathParam("accountNumber") BigDecimal accountNumber) {
         try {
             return Response.ok(new GenericResponse(200, "SUCCESS", "Current balance for account "
-                    + accountNumber+ " is "+ accountJournalingService.getAccoutCurrentBalance(accountNumber))).build();
+                    + accountNumber + " is " + accountJournalingService.getAccoutCurrentBalance(accountNumber))).build();
         } catch (Exception e) {
             return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving current balance of account " + accountNumber)).build();
+        }
+    }
+
+    @GET
+    @Path("accountingJournal/assetsValue")
+    public Response getAssetsValue() {
+        try {
+            return Response.ok(new GenericResponse(200, "SUCCESS", "Assets value is " + accountJournalingService.getAssetsValue())).build();
+        } catch (Exception e) {
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving assets value.")).build();
+        }
+    }
+
+    @GET
+    @Path("accountingJournal/liabilitiesValue")
+    public Response getLiabilitiesValue() {
+        try {
+            return Response.ok(new GenericResponse(200, "SUCCESS", "Liabilities value is " + accountJournalingService.getLiabilitiesValue())).build();
+        } catch (Exception e) {
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving liabilities value.")).build();
+        }
+    }
+
+    @GET
+    @Path("accountingJournal/equityValue")
+    public Response getEquityValue() {
+        try {
+            return Response.ok(new GenericResponse(200, "SUCCESS", "Equity value is " + accountJournalingService.getEquityValue())).build();
+        } catch (Exception e) {
+            return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving equity value.")).build();
         }
     }
 

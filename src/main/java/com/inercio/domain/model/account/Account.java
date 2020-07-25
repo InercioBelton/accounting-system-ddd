@@ -54,8 +54,6 @@ public class Account implements Serializable {
     public AccountingEntry debit(String description, BigDecimal amount) {
         Validate.notNull(description, "Description is required");
         Validate.notNull(amount, "Amount is required");
-        Validate.isTrue(balance.add(amount.negate()).compareTo(BigDecimal.valueOf(0)) >= 0,
-                "Account doesn't have sufficient funds to perform debit operation");
 
         AccountingEntry debitEntry = new AccountingEntry(description + " - " + AccountSide.DEBIT, amount.negate(), this, AccountSide.DEBIT);
         entries.add(debitEntry);
@@ -66,8 +64,6 @@ public class Account implements Serializable {
     public AccountingEntry credit(String description, BigDecimal amount) {
         Validate.notNull(description, "Description is required");
         Validate.notNull(amount, "Amount is required");
-        Validate.isTrue(balance.add(amount).compareTo(BigDecimal.valueOf(0)) >= 0,
-                "Account doesn't have sufficient funds to perform debit operation");
 
         AccountingEntry creditEntry = new AccountingEntry(description + " - " + AccountSide.CREDIT, amount, this, AccountSide.CREDIT);
         entries.add(creditEntry);

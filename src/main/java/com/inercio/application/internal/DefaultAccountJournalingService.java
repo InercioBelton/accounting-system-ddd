@@ -2,15 +2,17 @@ package com.inercio.application.internal;
 
 import com.inercio.application.AccountJournalingService;
 import com.inercio.domain.model.account.Account;
+import com.inercio.domain.model.account.AccountNotFoundException;
 import com.inercio.domain.model.account.AccountRepository;
+import com.inercio.domain.model.accountingEntry.AccountSide;
 import com.inercio.domain.model.accountingEntry.AccountingEntry;
 import com.inercio.domain.model.accountingEntry.AccountingEntryRepository;
-import com.inercio.domain.model.account.AccountNotFoundException;
 import org.apache.commons.lang3.Validate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,12 +99,26 @@ public class DefaultAccountJournalingService implements AccountJournalingService
 
     @Override
     public List<Account> listAssetAccounts() {
-        return null;
+        List<Account> assetAccountList = new ArrayList<>();
+        listAllAccounts().forEach(account -> {
+            if (account.getCurrentBalance().compareTo(BigDecimal.valueOf(0)) >= 0) {
+                assetAccountList.add(account);
+            }
+        });
+
+        return assetAccountList;
     }
 
     @Override
     public List<Account> listLiabilityAccounts() {
-        return null;
+        List<Account> liabilityAccountList = new ArrayList<>();
+        listAllAccounts().forEach(account -> {
+            if (account.getCurrentBalance().compareTo(BigDecimal.valueOf(0)) < 0) {
+                liabilityAccountList.add(account);
+            }
+        });
+
+        return liabilityAccountList;
     }
 
     @Override
@@ -112,27 +128,37 @@ public class DefaultAccountJournalingService implements AccountJournalingService
     }
 
     @Override
-    public BigDecimal getAccoutCurrentBalance(BigDecimal accountNumber) throws AccountNotFoundException{
+    public BigDecimal getAccoutCurrentBalance(BigDecimal accountNumber) throws AccountNotFoundException {
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account != null) {
             return account.getCurrentBalance();
-        }else{
+        } else {
             throw new AccountNotFoundException("Account with number: " + accountNumber + " was not found.");
         }
     }
 
     @Override
     public BigDecimal getEquityValue() {
-        return null;
+        return getAssetsValue().add(getLiabilitiesValue());
     }
 
     @Override
     public BigDecimal getAssetsValue() {
-        return null;
+        BigDecimal assetsValue = BigDecimal.ZERO;
+        for(Account account: listAssetAccounts()){
+            assetsValue = assetsValue.add(account.getCurrentBalance());
+        }
+
+        return assetsValue;
     }
 
     @Override
     public BigDecimal getLiabilitiesValue() {
-        return null;
+        BigDecimal liabilityValue = BigDecimal.ZERO;
+        for(Account account: listLiabilityAccounts()){
+            liabilityValue = liabilityValue.add(account.getCurrentBalance());
+        }
+
+        return liabilityValue;
     }
 }

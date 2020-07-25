@@ -25,12 +25,16 @@ public class MockData {
             account.setBalance(BigDecimal.valueOf(5000));
             accountList.add(account);
         }
+        accountList.get(4).setBalance(BigDecimal.ZERO);
+        accountList.get(5).setBalance(BigDecimal.valueOf(2000).negate());
     }
 
     private static void initAccountingEntryList() {
 
         accountingEntryList.add(new AccountingEntry("New debit entry test", BigDecimal.valueOf(1000), accountList.get(4), AccountSide.DEBIT));
         accountingEntryList.add(new AccountingEntry("New credit entry test", BigDecimal.valueOf(1000), accountList.get(5), AccountSide.CREDIT));
+        accountingEntryList.add(new AccountingEntry("New debit entry test 2", BigDecimal.valueOf(1000), accountList.get(4), AccountSide.DEBIT));
+
     }
 
 

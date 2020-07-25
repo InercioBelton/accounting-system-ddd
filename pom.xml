@@ -11,7 +11,7 @@
     <description>A Java 8 application that provides the core functionality of an accounting system and exposes a REST API</description>
 
     <properties>
-        <javaee.api.version>8.0</javaee.api.version>
+        <jakartaee-api.version>8.0.0</jakartaee-api.version>
         <resteasy.version>3.9.0.Final</resteasy.version>
         <hibernate.version>3.5.4-Final</hibernate.version>
         <hibernate.core.version>6.0.0.Alpha5</hibernate.core.version>
@@ -22,9 +22,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>${javaee.api.version}</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee-api.version}</version>
             <scope>provided</scope>
         </dependency>
 

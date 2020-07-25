@@ -18,6 +18,7 @@ import java.util.Objects;
 @NamedQuery(name = "AccountingEntry.findAllByCreationDate", query = "Select a from AccountingEntry a where a.creationDate = :creationDate")
 @NamedQuery(name = "AccountingEntry.findAllBetweenDates", query = "Select a from AccountingEntry a where a.creationTime between :startDate and :endDate")
 @NamedQuery(name = "AccountingEntry.findAllByAccount", query = "Select a from AccountingEntry a where a.account.accountNumber = :accountNumber")
+@NamedQuery(name = "AccountingEntry.findAllByAccountSide", query = "Select a.account from AccountingEntry a where a.accountSide = :accountSide")
 public class AccountingEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,20 +78,8 @@ public class AccountingEntry implements Serializable {
         return accountSide;
     }
 
-    public Long getEntryId() {
-        return entryId;
-    }
-
     public BigDecimal getAmount() {
         return amount;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
     }
 
     public Account getAccount() {

@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
@@ -35,7 +34,7 @@ public class AccountJournalingServiceTest {
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
         MockData.init();
         when(accountRepository.store(any(Account.class))).thenReturn(MockData.accountList.get(0));
@@ -140,10 +139,47 @@ public class AccountJournalingServiceTest {
     }
 
     @Test
-    public void getAccoutCurrentBalanceTest() throws AccountNotFoundException{
+    public void getAccoutCurrentBalanceTest() throws AccountNotFoundException {
         BigDecimal balance = accountJournalingService.getAccoutCurrentBalance(BigDecimal.valueOf(324233432));
-        Assert.assertEquals(BigDecimal.valueOf(5000), balance);
+        Assert.assertEquals(BigDecimal.valueOf(0), balance);
     }
+
+    @Test
+    public void listAssetAccountsTest(){
+        List<Account> assetsAccouts = accountJournalingService.listAssetAccounts();
+        Assert.assertNotNull(assetsAccouts);
+        Assert.assertTrue(!assetsAccouts.isEmpty());
+    }
+
+    @Test
+    public void listLiabilityAccountsTest(){
+        List<Account> liabilityAccounts = accountJournalingService.listLiabilityAccounts();
+        Assert.assertNotNull(liabilityAccounts);
+        Assert.assertTrue(!liabilityAccounts.isEmpty());
+    }
+
+    @Test
+    public void getAssetsValueTest(){
+        BigDecimal assetsValue = accountJournalingService.getAssetsValue();
+        Assert.assertNotNull(assetsValue);
+        Assert.assertTrue(assetsValue.compareTo(BigDecimal.valueOf(0)) >= 0);
+    }
+
+    @Test
+    public void getLiabilitiesValueTest(){
+        BigDecimal liabilitiesValue = accountJournalingService.getLiabilitiesValue();
+        Assert.assertNotNull(liabilitiesValue);
+        Assert.assertTrue(liabilitiesValue.compareTo(BigDecimal.valueOf(0)) < 0);
+    }
+
+    @Test
+    public void getEquityValueTest(){
+        BigDecimal equityValue = accountJournalingService.getEquityValue();
+        Assert.assertNotNull(equityValue);
+        Assert.assertTrue(equityValue.compareTo(BigDecimal.valueOf(0)) >= 0);
+    }
+
+
 
 
 }
