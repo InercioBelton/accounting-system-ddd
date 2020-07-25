@@ -43,7 +43,7 @@ To install the application locally, follow these steps:
 
 Check out the source code to your computer:
 ```
-git clone https://github.com/InercioBelton/number-generator.git
+git clone https://github.com/InercioBelton/accounting-system-ddd.git
 ```
 Navigate to the project directory and run the following command to build a clean package locally:
 ```
