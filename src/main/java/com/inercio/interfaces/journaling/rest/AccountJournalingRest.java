@@ -140,9 +140,13 @@ public class AccountJournalingRest {
 
     @GET
     @Path("accountingJournal/entries/creationDate")
-    public Response listAllEntriesbyCreationDate(@QueryParam("creationDate") String date) {
+    public Response listAllEntriesbyCreationDate(@QueryParam("creationDate") String dateString) {
+        Date date = toDate(dateString);
+        if (date == null) {
+            return Response.ok(new GenericResponse(500, "ERROR", "Invalid date input ")).build();
+        }
         try {
-            return Response.ok(accountJournalingService.listAllEntriesbyCreationDate(new Date(date))).build();
+            return Response.ok(accountJournalingService.listAllEntriesbyCreationDate(date)).build();
         } catch (Exception e) {
             return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving entries")).build();
         }
@@ -150,9 +154,14 @@ public class AccountJournalingRest {
 
     @GET
     @Path("accountingJournal/entries/betweenDates")
-    public Response listAllEntriesCreatedBetweenDates(@QueryParam("startDate") String startDate, @QueryParam("endDate") String endDate) {
+    public Response listAllEntriesCreatedBetweenDates(@QueryParam("startDate") String startDateString, @QueryParam("endDate") String endDateString) {
+        Date startDate = toDate(startDateString);
+        Date endDate = toDate(endDateString);
+        if (startDate == null || endDate == null) {
+            return Response.ok(new GenericResponse(500, "ERROR", "Invalid date input ")).build();
+        }
         try {
-            return Response.ok(accountJournalingService.listAllEntriesCreatedBetweenDates(new Date(startDate), new Date(endDate))).build();
+            return Response.ok(accountJournalingService.listAllEntriesCreatedBetweenDates(startDate, endDate)).build();
         } catch (Exception e) {
             return Response.ok(new GenericResponse(500, "ERROR", "An error occured when retrieving entries")).build();
         }
