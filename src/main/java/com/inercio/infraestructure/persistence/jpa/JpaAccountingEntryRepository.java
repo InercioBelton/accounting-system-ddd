@@ -1,7 +1,6 @@
 package com.inercio.infraestructure.persistence.jpa;
 
-import com.inercio.domain.model.account.Account;
-import com.inercio.domain.model.accountingEntry.AccountSide;
+import com.inercio.application.util.DateUtil;
 import com.inercio.domain.model.accountingEntry.AccountingEntry;
 import com.inercio.domain.model.accountingEntry.AccountingEntryRepository;
 
@@ -56,8 +55,9 @@ public class JpaAccountingEntryRepository implements AccountingEntryRepository, 
 
     @Override
     public List<AccountingEntry> findAllByCreationDate(Date date) {
-        return entityManager.createNamedQuery("AccountingEntry.findAllByCreationDate", AccountingEntry.class)
-                .setParameter("creationDate", date, TemporalType.DATE)
+        return entityManager.createNamedQuery("AccountingEntry.findAllBetweenDates", AccountingEntry.class)
+                .setParameter("startDate", DateUtil.toDate(DateUtil.convertToLocalDate(date).atStartOfDay()), TemporalType.TIMESTAMP)
+                .setParameter("endDate", DateUtil.toDate(DateUtil.convertToLocalDate(date).atTime(23, 59, 59)), TemporalType.TIMESTAMP)
                 .getResultList();
     }
 

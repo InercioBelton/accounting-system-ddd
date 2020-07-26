@@ -15,8 +15,7 @@ import java.util.Objects;
 @NamedQuery(name = "AccountingEntry.listAll", query = "Select a from AccountingEntry a")
 @NamedQuery(name = "AccountingEntry.findById", query = "Select a from AccountingEntry a where a.entryId = :id")
 @NamedQuery(name = "AccountingEntry.findByDescription", query = "Select a from AccountingEntry a where a.description = :description")
-@NamedQuery(name = "AccountingEntry.findAllByCreationDate", query = "Select a from AccountingEntry a where a.creationDate = :creationDate")
-@NamedQuery(name = "AccountingEntry.findAllBetweenDates", query = "Select a from AccountingEntry a where a.creationTime between :startDate and :endDate")
+@NamedQuery(name = "AccountingEntry.findAllBetweenDates", query = "Select a from AccountingEntry a where a.creationDate between :startDate and :endDate")
 @NamedQuery(name = "AccountingEntry.findAllByAccount", query = "Select a from AccountingEntry a where a.account.accountNumber = :accountNumber")
 @NamedQuery(name = "AccountingEntry.findAllByAccountSide", query = "Select a.account from AccountingEntry a where a.accountSide = :accountSide")
 public class AccountingEntry implements Serializable {
@@ -42,13 +41,8 @@ public class AccountingEntry implements Serializable {
 
     @Column(name = "creation_date")
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date creationDate;
-
-    @Column(name = "creation_time")
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date creationTime;
+    private Date creationDate;
 
     @ManyToOne
     private Account account;
@@ -56,7 +50,7 @@ public class AccountingEntry implements Serializable {
     public AccountingEntry() {
     }
 
-    public AccountingEntry(String description, BigDecimal amount, Account account, AccountSide accountSide) {
+    public AccountingEntry(String description, BigDecimal amount, Account account, AccountSide accountSide, Date date) {
         Validate.notNull(amount, "Amount is required");
         Validate.notNull(account, "Account is required");
         Validate.notNull(accountSide, "Account side is required");
@@ -66,8 +60,7 @@ public class AccountingEntry implements Serializable {
         this.description = description;
         this.account = account;
         this.accountSide = accountSide;
-        this.creationDate = new Date();
-        this.creationTime = new Date();
+        this.creationDate = date;
     }
 
     public String getDescription() {
@@ -107,7 +100,6 @@ public class AccountingEntry implements Serializable {
                 ", amount=" + amount +
                 ", accountSide=" + accountSide +
                 ", creationDate=" + creationDate +
-                ", creationTime=" + creationTime +
                 ", account=" + account +
                 '}';
     }

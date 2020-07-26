@@ -1,8 +1,8 @@
 package com.inercio.application;
 
 import com.inercio.domain.model.account.Account;
-import com.inercio.domain.model.accountingEntry.AccountingEntry;
 import com.inercio.domain.model.account.AccountNotFoundException;
+import com.inercio.domain.model.accountingEntry.AccountingEntry;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,11 +12,11 @@ public interface AccountJournalingService {
 
     Account createAccount(BigDecimal accountNumber, String accountName);
 
-    void debitAccount(BigDecimal accountNumber, String description, BigDecimal amount) throws AccountNotFoundException;
+    void debitAccount(BigDecimal accountNumber, String description, BigDecimal amount, Date date) throws AccountNotFoundException;
 
-    void creditAccount(BigDecimal accountNumber, String description, BigDecimal amount) throws AccountNotFoundException;
+    void creditAccount(BigDecimal accountNumber, String description, BigDecimal amount, Date date) throws AccountNotFoundException;
 
-    void postEntry(String description, BigDecimal amount, BigDecimal fromAccountNumber, BigDecimal toAccountNumber) throws AccountNotFoundException;
+    void postEntry(String description, BigDecimal amount, BigDecimal fromAccountNumber, BigDecimal toAccountNumber, Date date) throws AccountNotFoundException;
 
     List<AccountingEntry> listAllEntries();
 

@@ -62,7 +62,7 @@ public class AccountJournalingServiceTest {
 
     @Test
     public void debitAccountTest() throws AccountNotFoundException {
-        accountJournalingService.debitAccount(BigDecimal.valueOf(23423423), "debit test", BigDecimal.valueOf(1000));
+        accountJournalingService.debitAccount(BigDecimal.valueOf(23423423), "debit test", BigDecimal.valueOf(1000), new Date());
         Account account = accountRepository.findByAccountNumber(BigDecimal.valueOf(23423423));
         Assert.assertNotNull(account);
         Assert.assertNotNull(account.getEntries());
@@ -72,7 +72,7 @@ public class AccountJournalingServiceTest {
 
     @Test
     public void creditAccountTest() throws AccountNotFoundException {
-        accountJournalingService.creditAccount(BigDecimal.valueOf(33322112), "credit test", BigDecimal.valueOf(1000));
+        accountJournalingService.creditAccount(BigDecimal.valueOf(33322112), "credit test", BigDecimal.valueOf(1000), new Date());
         Account account = accountRepository.findByAccountNumber(BigDecimal.valueOf(33322112));
         Assert.assertNotNull(account);
         Assert.assertNotNull(account.getEntries());
@@ -84,7 +84,7 @@ public class AccountJournalingServiceTest {
     public void postEntryTest() throws AccountNotFoundException {
         Account fromAccount = MockData.accountList.get(6);
         Account toAccount = MockData.accountList.get(7);
-        accountJournalingService.postEntry("New Entry description test", BigDecimal.valueOf(4000), fromAccount.getAccountNumber(), toAccount.getAccountNumber());
+        accountJournalingService.postEntry("New Entry description test", BigDecimal.valueOf(4000), fromAccount.getAccountNumber(), toAccount.getAccountNumber(), new Date());
         Assert.assertTrue(!fromAccount.getEntries().isEmpty());
         Assert.assertTrue(!toAccount.getEntries().isEmpty());
         Assert.assertTrue(fromAccount.getEntries().stream().findFirst().get().getAccountSide().equals(AccountSide.DEBIT));
@@ -145,41 +145,39 @@ public class AccountJournalingServiceTest {
     }
 
     @Test
-    public void listAssetAccountsTest(){
+    public void listAssetAccountsTest() {
         List<Account> assetsAccouts = accountJournalingService.listAssetAccounts();
         Assert.assertNotNull(assetsAccouts);
         Assert.assertTrue(!assetsAccouts.isEmpty());
     }
 
     @Test
-    public void listLiabilityAccountsTest(){
+    public void listLiabilityAccountsTest() {
         List<Account> liabilityAccounts = accountJournalingService.listLiabilityAccounts();
         Assert.assertNotNull(liabilityAccounts);
         Assert.assertTrue(!liabilityAccounts.isEmpty());
     }
 
     @Test
-    public void getAssetsValueTest(){
+    public void getAssetsValueTest() {
         BigDecimal assetsValue = accountJournalingService.getAssetsValue();
         Assert.assertNotNull(assetsValue);
         Assert.assertTrue(assetsValue.compareTo(BigDecimal.valueOf(0)) >= 0);
     }
 
     @Test
-    public void getLiabilitiesValueTest(){
+    public void getLiabilitiesValueTest() {
         BigDecimal liabilitiesValue = accountJournalingService.getLiabilitiesValue();
         Assert.assertNotNull(liabilitiesValue);
         Assert.assertTrue(liabilitiesValue.compareTo(BigDecimal.valueOf(0)) < 0);
     }
 
     @Test
-    public void getEquityValueTest(){
+    public void getEquityValueTest() {
         BigDecimal equityValue = accountJournalingService.getEquityValue();
         Assert.assertNotNull(equityValue);
         Assert.assertTrue(equityValue.compareTo(BigDecimal.valueOf(0)) >= 0);
     }
-
-
 
 
 }

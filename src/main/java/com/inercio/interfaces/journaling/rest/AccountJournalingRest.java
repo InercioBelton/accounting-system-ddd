@@ -9,12 +9,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/")
 public class AccountJournalingRest {
+
+    private final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("");
 
     @Inject
     private AccountJournalingService accountJournalingService;
@@ -38,11 +43,18 @@ public class AccountJournalingRest {
     @Path("account/debit")
     public Response debitAccount(@QueryParam("accountNumber") BigDecimal accountNumber,
                                  @QueryParam("description") String description,
-                                 @QueryParam("amount") BigDecimal amount) throws AccountNotFoundException {
+                                 @QueryParam("amount") BigDecimal amount,
+                                 @QueryParam("date") String dateString) throws AccountNotFoundException {
 
         GenericResponse response;
+        Date date = toDate(dateString);
+        if (date == null) {
+            response = createResponse(500, "ERROR", "Invalid date input ");
+            return Response.ok(response).build();
+        }
+
         try {
-            accountJournalingService.debitAccount(accountNumber, description, amount);
+            accountJournalingService.debitAccount(accountNumber, description, amount, date);
             response = createResponse(200, "SUCCESS", amount + " was debited successfully from account " + accountNumber);
         } catch (Exception e) {
             response = createResponse(500, "ERROR", "An error occured while processing debit to account " + accountNumber);
@@ -54,11 +66,17 @@ public class AccountJournalingRest {
     @Path("account/credit")
     public Response creditAccount(@QueryParam("accountNumber") BigDecimal accountNumber,
                                   @QueryParam("description") String description,
-                                  @QueryParam("amount") BigDecimal amount) throws AccountNotFoundException {
+                                  @QueryParam("amount") BigDecimal amount,
+                                  @QueryParam("date") String dateString) throws AccountNotFoundException {
 
         GenericResponse response;
+        Date date = toDate(dateString);
+        if (date == null) {
+            response = createResponse(500, "ERROR", "Invalid date input ");
+            return Response.ok(response).build();
+        }
         try {
-            accountJournalingService.creditAccount(accountNumber, description, amount);
+            accountJournalingService.creditAccount(accountNumber, description, amount, date);
             response = createResponse(200, "SUCCESS", amount + " was credited successfully into account " + accountNumber);
         } catch (Exception e) {
             response = createResponse(500, "ERROR", "An error occured while processing credit to account " + accountNumber);
@@ -71,11 +89,17 @@ public class AccountJournalingRest {
     public Response postEntry(@QueryParam("description") String description,
                               @QueryParam("amount") BigDecimal amount,
                               @QueryParam("fromAccountNumber") BigDecimal fromAccountNumber,
-                              @QueryParam("toAccountNumber") BigDecimal toAccountNumber) throws AccountNotFoundException {
+                              @QueryParam("toAccountNumber") BigDecimal toAccountNumber,
+                              @QueryParam("date") String dateString) throws AccountNotFoundException {
 
         GenericResponse response;
+        Date date = toDate(dateString);
+        if (date == null) {
+            response = createResponse(500, "ERROR", "Invalid date input ");
+            return Response.ok(response).build();
+        }
         try {
-            accountJournalingService.postEntry(description, amount, fromAccountNumber, toAccountNumber);
+            accountJournalingService.postEntry(description, amount, fromAccountNumber, toAccountNumber, date);
             response = createResponse(200, "SUCCESS", "Posted sucessfully into the accounting journal");
         } catch (Exception e) {
             response = createResponse(500, "ERROR", "An error occured while posting accounting journal");
@@ -217,6 +241,20 @@ public class AccountJournalingRest {
 
     private GenericResponse createResponse(int code, String message, String description) {
         return new GenericResponse(code, message, description);
+    }
+
+    private Date toDate(String dateString) {
+        Date date;
+        try {
+            date = new Date(dateString);
+        } catch (Exception e) {
+            try {
+                date = DEFAULT_DATE_FORMAT.parse(dateString);
+            } catch (ParseException ex) {
+                return null;
+            }
+        }
+        return date;
     }
 
 }

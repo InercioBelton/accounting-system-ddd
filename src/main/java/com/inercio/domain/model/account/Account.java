@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -51,21 +52,21 @@ public class Account implements Serializable {
         this.balance = BigDecimal.valueOf(0);
     }
 
-    public AccountingEntry debit(String description, BigDecimal amount) {
+    public AccountingEntry debit(String description, BigDecimal amount, Date date) {
         Validate.notNull(description, "Description is required");
         Validate.notNull(amount, "Amount is required");
 
-        AccountingEntry debitEntry = new AccountingEntry(description + " - " + AccountSide.DEBIT, amount.negate(), this, AccountSide.DEBIT);
+        AccountingEntry debitEntry = new AccountingEntry(description + " - " + AccountSide.DEBIT, amount.negate(), this, AccountSide.DEBIT, date);
         entries.add(debitEntry);
         balance = balance.add(amount.negate());
         return debitEntry;
     }
 
-    public AccountingEntry credit(String description, BigDecimal amount) {
+    public AccountingEntry credit(String description, BigDecimal amount, Date date) {
         Validate.notNull(description, "Description is required");
         Validate.notNull(amount, "Amount is required");
 
-        AccountingEntry creditEntry = new AccountingEntry(description + " - " + AccountSide.CREDIT, amount, this, AccountSide.CREDIT);
+        AccountingEntry creditEntry = new AccountingEntry(description + " - " + AccountSide.CREDIT, amount, this, AccountSide.CREDIT, date);
         entries.add(creditEntry);
         balance = balance.add(amount);
         return creditEntry;

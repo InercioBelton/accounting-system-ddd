@@ -4,7 +4,6 @@ import com.inercio.application.AccountJournalingService;
 import com.inercio.domain.model.account.Account;
 import com.inercio.domain.model.account.AccountNotFoundException;
 import com.inercio.domain.model.account.AccountRepository;
-import com.inercio.domain.model.accountingEntry.AccountSide;
 import com.inercio.domain.model.accountingEntry.AccountingEntry;
 import com.inercio.domain.model.accountingEntry.AccountingEntryRepository;
 import org.apache.commons.lang3.Validate;
@@ -31,10 +30,10 @@ public class DefaultAccountJournalingService implements AccountJournalingService
         return account;
     }
 
-    public void debitAccount(BigDecimal accountNumber, String description, BigDecimal amount) throws AccountNotFoundException {
+    public void debitAccount(BigDecimal accountNumber, String description, BigDecimal amount, Date date) throws AccountNotFoundException {
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account != null) {
-            AccountingEntry debitEntry = account.debit(description, amount);
+            AccountingEntry debitEntry = account.debit(description, amount, date);
             accountingEntryRepository.store(debitEntry);
             accountRepository.store(account);
         } else {
@@ -42,11 +41,11 @@ public class DefaultAccountJournalingService implements AccountJournalingService
         }
     }
 
-    public void creditAccount(BigDecimal accountNumber, String description, BigDecimal amount) throws AccountNotFoundException {
+    public void creditAccount(BigDecimal accountNumber, String description, BigDecimal amount, Date date) throws AccountNotFoundException {
         Validate.notNull(accountNumber, "Account number is required");
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account != null) {
-            AccountingEntry creditEntry = account.credit(description, amount);
+            AccountingEntry creditEntry = account.credit(description, amount, date);
             accountingEntryRepository.store(creditEntry);
             accountRepository.store(account);
         } else {
@@ -55,9 +54,9 @@ public class DefaultAccountJournalingService implements AccountJournalingService
     }
 
     @Override
-    public void postEntry(String description, BigDecimal amount, BigDecimal fromAccountNumber, BigDecimal toAccountNumber) throws AccountNotFoundException {
-        debitAccount(fromAccountNumber, description, amount);
-        creditAccount(toAccountNumber, description, amount);
+    public void postEntry(String description, BigDecimal amount, BigDecimal fromAccountNumber, BigDecimal toAccountNumber, Date date) throws AccountNotFoundException {
+        debitAccount(fromAccountNumber, description, amount, date);
+        creditAccount(toAccountNumber, description, amount, date);
     }
 
     @Override
@@ -145,7 +144,7 @@ public class DefaultAccountJournalingService implements AccountJournalingService
     @Override
     public BigDecimal getAssetsValue() {
         BigDecimal assetsValue = BigDecimal.ZERO;
-        for(Account account: listAssetAccounts()){
+        for (Account account : listAssetAccounts()) {
             assetsValue = assetsValue.add(account.getCurrentBalance());
         }
 
@@ -155,7 +154,7 @@ public class DefaultAccountJournalingService implements AccountJournalingService
     @Override
     public BigDecimal getLiabilitiesValue() {
         BigDecimal liabilityValue = BigDecimal.ZERO;
-        for(Account account: listLiabilityAccounts()){
+        for (Account account : listLiabilityAccounts()) {
             liabilityValue = liabilityValue.add(account.getCurrentBalance());
         }
 
