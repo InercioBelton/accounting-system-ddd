@@ -9,9 +9,13 @@
 **Data**
 
 Query param `fromAccountNumber`: BigDecimal
+
 Query param `toAccountNumber`: BigDecimal
+
 Query param `description`: String
+
 Query param `amount`: BigDecimal
+
 Query param `date`: String (following the pattern 'yyyy/MM/dd', example: 2020/07/24)
 
 ## Success Response
