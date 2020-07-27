@@ -23,11 +23,11 @@ public class MockData {
         for (long index = 0; index < 10; index++) {
             Account account = new Account(BigDecimal.valueOf(12324234 + index), "Test Account" + 1);
             account.setId(index);
-            account.setBalance(BigDecimal.valueOf(5000));
+            account.defineInitialBalance(BigDecimal.valueOf(5000));
             accountList.add(account);
         }
-        accountList.get(4).setBalance(BigDecimal.ZERO);
-        accountList.get(5).setBalance(BigDecimal.valueOf(2000).negate());
+        accountList.get(4).defineInitialBalance(BigDecimal.ZERO);
+        accountList.get(5).defineInitialBalance(BigDecimal.valueOf(2000).negate());
     }
 
     private static void initAccountingEntryList() {
