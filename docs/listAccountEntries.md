@@ -17,58 +17,132 @@
 [
     {
         "entryId": 3,
-        "description": "Initial credit - CREDIT",
-        "amount": 4000,
-        "accountSide": "CREDIT",
-        "creationDate": 1595541600000,
-        "creationTime": 1595621601898,
+        "description": "Test 5 - DEBIT",
+        "amount": -500,
+        "accountSide": "DEBIT",
+        "creationDate": 1595790761523,
         "account": {
-            "id": 1,
-            "accountNumber": 1232132,
-            "accountName": "Test account 2",
-            "currentBalance": 400
+            "id": 2,
+            "accountNumber": 76867687,
+            "accountName": "Test account",
+            "currentBalance": -600
         }
     },
     {
         "entryId": 4,
-        "description": "Initial debit - DEBIT",
-        "amount": -500,
-        "accountSide": "DEBIT",
-        "creationDate": 1595541600000,
-        "creationTime": 1595621660566,
+        "description": "Test 5 - CREDIT",
+        "amount": 500,
+        "accountSide": "CREDIT",
+        "creationDate": 1595790761554,
         "account": {
             "id": 1,
-            "accountNumber": 1232132,
-            "accountName": "Test account 2",
-            "currentBalance": 400
+            "accountNumber": 3243543454,
+            "accountName": "Test account",
+            "currentBalance": 200
         }
     },
     {
         "entryId": 5,
-        "description": "Test - DEBIT",
-        "amount": -3000,
+        "description": "Initial debit - DEBIT",
+        "amount": -200,
         "accountSide": "DEBIT",
-        "creationDate": 1595541600000,
-        "creationTime": 1595621720865,
+        "creationDate": 1595628000000,
         "account": {
             "id": 1,
-            "accountNumber": 1232132,
-            "accountName": "Test account 2",
-            "currentBalance": 400
+            "accountNumber": 3243543454,
+            "accountName": "Test account",
+            "currentBalance": 200
+        }
+    },
+    {
+        "entryId": 7,
+        "description": "Initial debit 1 - DEBIT",
+        "amount": -100,
+        "accountSide": "DEBIT",
+        "creationDate": 1595692800000,
+        "account": {
+            "id": 1,
+            "accountNumber": 3243543454,
+            "accountName": "Test account",
+            "currentBalance": 200
         }
     },
     {
         "entryId": 8,
-        "description": "Test 2 - DEBIT",
+        "description": "Test 6 - DEBIT",
         "amount": -100,
         "accountSide": "DEBIT",
-        "creationDate": 1595541600000,
-        "creationTime": 1595627745664,
+        "creationDate": 1595628000000,
+        "account": {
+            "id": 2,
+            "accountNumber": 76867687,
+            "accountName": "Test account",
+            "currentBalance": -600
+        }
+    },
+    {
+        "entryId": 9,
+        "description": "Test 6 - CREDIT",
+        "amount": 100,
+        "accountSide": "CREDIT",
+        "creationDate": 1595628000000,
         "account": {
             "id": 1,
-            "accountNumber": 1232132,
-            "accountName": "Test account 2",
-            "currentBalance": 400
+            "accountNumber": 3243543454,
+            "accountName": "Test account",
+            "currentBalance": 200
+        }
+    },
+    {
+        "entryId": 11,
+        "description": "Test 8 - DEBIT",
+        "amount": -100,
+        "accountSide": "DEBIT",
+        "creationDate": 1595800800000,
+        "account": {
+            "id": 1,
+            "accountNumber": 3243543454,
+            "accountName": "Test account",
+            "currentBalance": 200
+        }
+    },
+    {
+        "entryId": 12,
+        "description": "Test 8 - CREDIT",
+        "amount": 100,
+        "accountSide": "CREDIT",
+        "creationDate": 1595800800000,
+        "account": {
+            "id": 10,
+            "accountNumber": 42352345435,
+            "accountName": "Test account3",
+            "currentBalance": 4000
+        }
+    },
+    {
+        "entryId": 13,
+        "description": "Initial debit 13 - DEBIT",
+        "amount": -100,
+        "accountSide": "DEBIT",
+        "creationDate": 1595865600000,
+        "account": {
+            "id": 10,
+            "accountNumber": 42352345435,
+            "accountName": "Test account3",
+            "currentBalance": 4000
+        }
+    },
+    {
+        "entryId": 14,
+        "description": "Initial credit - CREDIT",
+        "amount": 4000,
+        "accountSide": "CREDIT",
+        "creationDate": 1595865600000,
+        "account": {
+            "id": 10,
+            "accountNumber": 42352345435,
+            "accountName": "Test account3",
+            "currentBalance": 4000
         }
     }
 ]
