@@ -4,7 +4,7 @@
 
 **Example**: `http://127.0.0.1:8080/accounting-system-ddd/api/accountingJournal/account/1232132/balance`
 
-**Method** : `POST`
+**Method** : `GET`
 
 **Data**
 
