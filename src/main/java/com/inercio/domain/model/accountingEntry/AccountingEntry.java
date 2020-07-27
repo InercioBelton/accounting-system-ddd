@@ -55,6 +55,7 @@ public class AccountingEntry implements Serializable {
         Validate.notNull(account, "Account is required");
         Validate.notNull(accountSide, "Account side is required");
         Validate.notNull(description, "Description is required");
+        Validate.notNull(date, "Date is required");
 
         this.amount = amount;
         this.description = description;
