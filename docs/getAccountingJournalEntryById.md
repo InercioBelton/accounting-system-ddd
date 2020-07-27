@@ -4,7 +4,7 @@
 
 **Example** : `http://127.0.0.1:8080/accounting-system-ddd/api/accountingJournal/entry/4`
 
-**Method** : `POST`
+**Method** : `GET`
 
 ## Success Response
 
