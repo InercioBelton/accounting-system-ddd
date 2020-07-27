@@ -63,6 +63,14 @@ public class AccountingEntry implements Serializable {
         this.creationDate = date;
     }
 
+    public Long getEntryId() {
+        return entryId;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
     public String getDescription() {
         return description;
     }
