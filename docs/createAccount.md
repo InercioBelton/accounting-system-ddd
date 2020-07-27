@@ -9,6 +9,7 @@
 **Data**
 
 Query param `accountNumber`: BigDecimal
+
 Query param `accountName`: String
 
 ## Success Response
