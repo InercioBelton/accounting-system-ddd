@@ -16,7 +16,7 @@
         <hibernate.version>3.5.4-Final</hibernate.version>
         <hibernate.core.version>6.0.0.Alpha5</hibernate.core.version>
         <commons.lang.version>3.4</commons.lang.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <mockito.version>3.4.4</mockito.version>
     </properties>
 
